@@ -49,7 +49,7 @@ spotify.search({ type: 'track', query: songName }, function(err, data) {
 // omdb function
 
 function movie(movieName) {
-    request(`http://www.omdbapi.com/?t=${movieName}y=&plot=short&apikey=trilogy`, function(error, response, body) {
+    request(`http://www.omdbapi.com/?t=${movieName}&apikey=trilogy`, function(error, response, body) {
 
         // If the request is successful (i.e. if the response status code is 200)
         if (!error && response.statusCode === 200) {
@@ -57,7 +57,14 @@ function movie(movieName) {
             // Parse the body of the site and recover just the imdbRating
             // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
             let movieData = {
-                "Title": blah.title,
+                "Title of the movie: ": JSON.parse(body).Title,
+                "Year the movie came out: ": JSON.parse(body).Year, 
+                "IMDB rating of this movie: ": JSON.parse(body).imdbRating, 
+                "Rotten tomatoes rating of thie movie :": JSON.parse(body).Ratings[2], 
+                "Country where the movie was produced :": JSON.parse(body).Country, 
+                "Language of the movie: ": JSON.parse(body).Language, 
+                "Plot of the movie: ": JSON.parse(body).Plot, 
+                "Actors in the movie: ": JSON.parse(body).Actors
             }
 
             console.log(movieData);
@@ -65,6 +72,8 @@ function movie(movieName) {
 
     });
 }
+
+
 
 // bonus
 // fs.appendFile will work to move data to the .txt file
